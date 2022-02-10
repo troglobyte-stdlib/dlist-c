@@ -1,10 +1,12 @@
-# Miok package
+# Miok double list
 
 ## About
 
 * * *
 
-Please add relevant information about your package.
+Doubly linked list is a type of linked list in which each node apart from
+storing its data has two links. The first link points to the previous node
+in the list and the second link points to the next node in the list.
 
 The design of the API has significant impact on its usage. The principle of
 information hiding describes the role of programming interfaces as enabling
@@ -36,8 +38,8 @@ in your subprojects directory and include the dependency in your project.
 
 ```console
 [wrap-git]
-directory = miok-module
-url = https://github.com/miok-modules/module.git
+directory = miok-dlist-c
+url = https://github.com/miok-modules/dlist-c.git
 revision = main
 
 [provide]
@@ -48,7 +50,7 @@ module = module_dep
 The next step should be to add the package to your Meson project:
 
 ```meson
-module_dep = dependency('miko-module')
+module_dep = dependency('miko-dlist-c')
 
 executable('prog', 'main.c',
     dependencies : [module_dep])
@@ -68,17 +70,33 @@ more please view the API documentation thanks.
 **Usage in C**:
 
 ```c
-#include <stdio>
-#include <stdlib>
-#include <miko/package.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <miok/doublylist.h>
 
 //
 // main is where all good examples start
 //
 int main(void)
 {
-    printf("%s", greet());
+    DoublyListOf *mList = miok_doubly_list_create();
+    if (miok_doubly_list_its_empty(mList))
+    {
+        return EXIT_FAILURE;
+    } // end if
+    miok_doubly_list_push(mList, "* Cheese");
+    miok_doubly_list_push(mList, "* coffee");
+    miok_doubly_list_push(mList, "* Red Bull");
+    miok_doubly_list_push(mList, "* Eggs");
+    miok_doubly_list_push(mList, "* Milk");
+
+    printf("%s ", "Shopping list");
+    while (miok_doubly_list_not_empty(mList))
+    {
+        printf("%s ", miok_doubly_list_peek(mList));
+        miok_doubly_list_pop(mList);
+    } // end while
+    miok_doubly_list_erase(&mList);
     return EXIT_SUCCESS;
 } // end of function main
 
