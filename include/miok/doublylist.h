@@ -3,8 +3,8 @@
 // author: Michael Brockus
 // gmail: <michaelbrockus@gmail.com>
 //
-#ifndef MIOK_PACKAGE_H
-#define MIOK_PACKAGE_H
+#ifndef MIOK_DLIST_PACKAGE_H
+#define MIOK_DLIST_PACKAGE_H
 
 #ifdef __cplusplus
 extern "C"
@@ -14,7 +14,7 @@ extern "C"
 //
 // Macros to control the visibility of functions provided by this package
 //
-#ifdef BUILDING_MIOK_PACKAGE
+#ifdef BUILDING_MIOK_DLIST_PACKAGE
 #define MIOK_PUBLIC __attribute__((visibility("default")))
 #else
 #define MIOK_PUBLIC
@@ -31,7 +31,16 @@ extern "C"
 // package name and everything should just work.
 //
 
-MIOK_PUBLIC const char *greet(void);
+typedef struct DoublyListOf DoublyListOf;
+
+
+MIOK_PUBLIC DoublyListOf *miok_doubly_list_create(void);
+MIOK_PUBLIC void miok_doubly_list_erase(DoublyListOf **structure_ref);
+MIOK_PUBLIC void miok_doubly_list_push(DoublyListOf *structure_ptr, const char *data);
+MIOK_PUBLIC char *miok_doubly_list_pop(DoublyListOf *structure_ptr);
+MIOK_PUBLIC char *miok_doubly_list_peek(DoublyListOf *structure_ptr);
+MIOK_PUBLIC unsigned int miok_doubly_list_its_empty(DoublyListOf *structure_ptr);
+MIOK_PUBLIC unsigned int miok_doubly_list_not_empty(DoublyListOf *structure_ptr);
 
 #ifdef __cplusplus
 }
